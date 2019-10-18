@@ -1,6 +1,7 @@
 const request = require('supertest');
-
-const server = require('./jokes-router.js');
+const authenticate = require('../auth/authenticate-middleware');
+const server = require('../api/server');
+const jwt = require('jsonwebtoken');
 
 /* 1. does it return the correct status code for the input provided?
    2. does it return the data in the expected format?
@@ -16,12 +17,15 @@ describe('GET /', () => {
   //check to make sure we get the correct status code back
 
   // should return http 200 ok
-  it('should return 200 http status code', () => {
-    return request(server)
+  it('should return 200 http status code', async () => {
+    const joke = await request(server)
       .get('/api/jokes')
-      .then(response => {
-        expect(response.status).toBe(200);
-      });
+      .set(
+        'authorization',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvYzciLCJzdWJqZWN0Ijo2LCJpYXQiOjE1NzE0MzA1ODAsImV4cCI6MTU3MTQzNDE4MH0.suTkDvvulYJGj6nDHaPhGd5fg3vSZqWSjUXNUUoYCSs'
+      );
+
+    expect(joke.status).toBe(200);
   });
 
   // should return json
