@@ -9,7 +9,7 @@ router.get('/', restricted, (req, res) => {
 
   Users.find()
     .then(users => {
-      res.json({ loggedInUser: req.username, users });
+      res.status(200).json({ loggedInUser: req.username, users });
     })
     .catch(err => {
       res.status(500).json({
