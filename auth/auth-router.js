@@ -23,6 +23,7 @@ router.post('/register', (req, res) => {
       });
     })
     .catch(error => {
+      console.log(error);
       res.status(500).json({ message: 'cannot add the user', ...error });
     });
 });
@@ -55,9 +56,7 @@ router.post('/login', (req, res) => {
 function generateToken(user) {
   const payload = {
     username: user.username,
-    subject: user.id,
-    department: user.department,
-    role: user.role
+    subject: user.id
   };
   const options = {
     expiresIn: '1h'
