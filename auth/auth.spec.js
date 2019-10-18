@@ -1,5 +1,6 @@
 const Users = require('../users/users_model');
-
+const request = require('supertest');
+const server = require('../api/server');
 const db = require('../database/dbConfig');
 
 /* 1. does it return the correct status code for the input provided?
@@ -7,6 +8,32 @@ const db = require('../database/dbConfig');
    3. does the data returned, if any, have the right content? */
 
 /* When testing your endpoints, start with those three tests and then move on to write tests that will be unique for the system you’re building.*/
+
+describe('/POST', () => {
+  it('should return 200 OK', async () => {
+    const call = await request(server)
+      .post('/api/auth/register')
+      .send({ username: 'Rockey9', password: '123' });
+    expect(call.status).toBe(201);
+  });
+  it('should return a 500 database error', async () => {
+    const reg = await request(server).post('/api/auth/register');
+    expect(reg.status).toBe(500);
+  });
+});
+
+describe('/POST', () => {
+  it('should return 200 OK', async () => {
+    const logintest = await request(server)
+      .post('/api/auth/login')
+      .send({ username: 'Rockey9', password: '123' });
+    expect(logintest.status).toBe(201);
+  });
+  it('should return a 500 database error', async () => {
+    const login = await request(server).post('/api/auth/login');
+    expect(login.status).toBe(500);
+  });
+});
 
 it('should set testing environment', () => {
   expect(process.env.DB_ENV).toBe('testing');

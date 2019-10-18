@@ -40,7 +40,7 @@ router.post('/login', (req, res) => {
         const token = generateToken(user);
 
         // add token to response
-        res.status(200).json({
+        res.status(201).json({
           message: `Welcome ${user.username}!`,
           token
         });

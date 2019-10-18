@@ -18,7 +18,7 @@ describe('GET /', () => {
   // should return http 200 ok
   it('should return 200 http status code', () => {
     return request(server)
-      .get('/')
+      .get('/api/jokes')
       .then(response => {
         expect(response.status).toBe(200);
       });
@@ -26,7 +26,7 @@ describe('GET /', () => {
 
   // should return json
   test('should return JSON', async () => {
-    const response = await request(server).get('/');
+    const response = await request(server).get('/api/jokes');
 
     // toMatch uses a regular expression to check the value
     expect(response.type).toMatch(/json/i);
